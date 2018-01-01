@@ -15,8 +15,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-left">
-          <h2>Milestone Project</h2>
-          <from id='iput' method='post' action='index'>
+          <h2>Milestone Project 2</h2>
+          <from action="{{ url_for('view_ticker') }}" method='post'>
           <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSAL' /></p>
           <p><input type="submit" value="Submit"></p>
           </from>  
