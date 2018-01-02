@@ -19,6 +19,9 @@
           <form action="{{ url_for('view_ticker') }}" method="post">
           <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSAL' /></p>
           <input type="checkbox" name ='features' value='close' />Closing Price<br>
+          <input type="checkbox" name ='features' value='adj_close' />Adjust closing price<br>
+          <input type="checkbox" name ='features' value='open' />Opening Price<br>
+          <input type="checkbox" name ='features' value='adj_open' />Adjusted opening price<br>
           <p><input type="submit" value="Submit"></p>
           </form>  
         </div>
