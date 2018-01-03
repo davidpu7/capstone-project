@@ -19,16 +19,16 @@ def view_ticker():
         status = 'Close'
         if request.form.get('box1'):
             value = '.4'
-            status = 'close'
+            status = 'Close'
         if request.form.get('box2'):
             value = '.11'
-            status = 'adj_close'
+            status = 'Adj. Close'
         if request.form.get('box3'):
             value = '.1'
-            status = 'open'
+            status = 'Open'
         if request.form.get('box4'):
             value = '.8'
-            status = 'adj_open'
+            status = 'Adj. Open'
 
         mydata = qd.get("WIKI/" + stock + value, rows = 20, api_key='oSvidbxNa84mVv7Kzqh2')
         p = figure(x_axis_type = 'datetime', title = status + " Price for " + request.form['ticker'])
