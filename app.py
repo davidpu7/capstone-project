@@ -1,13 +1,11 @@
 from flask import Flask, render_template, request, redirect
 import requests as rq
-import Quandl as qd
+import quandl as qd
 from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import file_html
 
 app = Flask(__name__)
-
-DUMMY = range(5)
 
 @app.route('/')
 def index():
@@ -15,22 +13,29 @@ def index():
 
 @app.route('/view_ticker', methods=['GET', 'POST'])
 def view_ticker():
-    stock = request.form['ticker']
-    value = 0.4
     if request.method == 'POST':
-        if 'close' in request.form:
-            value = "0.4"
-        if 'adj_close' in request.form:
-            value = "0.10"
-        if 'open' in request.form:
-            value = "0.1"
-        if 'adj_open' in request.form:
-            value = "0.7"
+        stock = request.form['ticker']
+        value = '.4'
+        status = 'Close'
+        if request.form.get('box1'):
+            value = '.4'
+            status = 'close'
+        if request.form.get('box2'):
+            value = '.11'
+            status = 'adj_close'
+        if request.form.get('box3'):
+            value = '.1'
+            status = 'open'
+        if request.form.get('box4'):
+            value = '.8'
+            status = 'adj_open'
 
-        mydata =  qd.get("WIKI/" + stock + value, rows = 20, api_key='oSvidbxNa84mVv7Kzqh2')
-        plot = figure(plot_width=400, plot_height=400)
-        p.line = DUMMY
-        html = file_html(plot, CDN, "my plot") 
+        mydata = qd.get("WIKI/" + stock + value, rows = 20, api_key='oSvidbxNa84mVv7Kzqh2')
+        p = figure(x_axis_type = 'datetime', title = status + " Price for " + request.form['ticker'])
+        p.line('Date', status, source=mydata)
+        p.xaxis.axis_label = "Date"
+        p.yaxis.axis_label = "Price"
+        html = file_html(p, CDN, "my plot")
 
         return html
 
