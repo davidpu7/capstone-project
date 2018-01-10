@@ -41,4 +41,4 @@ def view_ticker():
     return html
 
 if __name__ == '__main__':
-  app.run(port=33507)
+  app.run()

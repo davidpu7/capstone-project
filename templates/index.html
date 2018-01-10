@@ -18,6 +18,7 @@
           <h2>Milestone Project 1</h2>
           <form action="{{ url_for('view_ticker') }}" method="post">
           <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSAL' /></p>
+	  <p>Start Date: <input type='date' name='start)date' /></p>
           <input type="checkbox" name ="box1" value='close' />Closing Price<br>
           <input type="checkbox" name ="box2" value='adj_close' />Adjust closing price<br>
           <input type="checkbox" name ="box3" value='open' />Opening Price<br>
