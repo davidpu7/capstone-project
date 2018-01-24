@@ -10,8 +10,6 @@ import pandas as pd
 import numpy as np
 from pandas_datareader.data import DataReader
 from datetime import datetime
-from statsmodels import api as sm 
-import seaborn as sb
 
 
 
@@ -65,13 +63,6 @@ def view_ticker():
     dec = df.Open > df.Close
     w=0.5
     
-    #This is where ARIMA starts
-    df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
-    price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1)) 
-    results = model.fit(disp=-1)
-    df['Forecast'] = results.fittedvalues 
-    
     #use ColumnDataSource to pass in data for tooltips
     sourceInc=ColumnDataSource(ColumnDataSource.from_df(df.loc[inc]))
     sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec]))
@@ -107,12 +98,6 @@ def view_ticker():
     p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", line_color="green", source=sourceInc)
     #this is the candle body for the green dates
     p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", line_color="red", source=sourceDec)
-
-    #this is where the ARIMA line
-    
-    #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
-    p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast')
-    p.legend.location = "top_left" 
 
     html = file_html(p, CDN, "my plot")
 
