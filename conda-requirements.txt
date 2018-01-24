@@ -7,5 +7,4 @@ pip
 simplejson
 quandl
 pandas-datareader
-seaborn
 statsmodels

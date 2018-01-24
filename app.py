@@ -82,7 +82,8 @@ def view_ticker():
             ("Open", "@Open"),
             ("Close", "@Close"),
             ("Percent", "@changepercent"),
-	    ("Volume", "@Volume")
+	    ("Volume", "@Volume"),
+            ("Forecast", "@Forecast"),
         ]
     )
 
@@ -110,7 +111,7 @@ def view_ticker():
     #this is where the ARIMA line
     
     #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
-    p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast')
+    p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast', name='Forecast_line')
     p.legend.location = "top_left" 
 
     html = file_html(p, CDN, "my plot")
@@ -118,4 +119,4 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run()
+  app.run(host="0.0.0.0")
