@@ -5,6 +5,7 @@ from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import file_html
 from bokeh.models import ColumnDataSource, HoverTool,CrosshairTool
+from bokeh.core.properties import value
 from datetime import datetime
 import pandas as pd
 import numpy as np
@@ -74,19 +75,22 @@ def view_ticker():
     #use ColumnDataSource to pass in data for tooltips
     sourceInc=ColumnDataSource(ColumnDataSource.from_df(df.loc[inc]))
     sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec]))
-    
+    #will not need this one because we are putting a separate hoover to the forecast line
+    sourceforecast=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))    
+
     #the values for the tooltip come from ColumnDataSource
     hover = HoverTool(
+        names=['source_Inc', 'source_Dec'],
         tooltips=[
             ("Date", "@Date"),
             ("Open", "@Open"),
             ("Close", "@Close"),
             ("Percent", "@changepercent"),
-	    ("Volume", "@Volume"),
-            ("Forecast", "@Forecast"),
+            ("Volume", "@Volume"),
+           # ("Forecast", "@Forecast"),
         ]
     )
-
+    
     TOOLS = [CrosshairTool(), hover]
 
     # map dataframe indices to date strings and use as label overrides
@@ -104,14 +108,15 @@ def view_ticker():
     #this is the bottom tail 
     p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
     #this is the candle body for the red dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", line_color="green", source=sourceInc)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", line_color="green", name='source_Inc',  source=sourceInc)
     #this is the candle body for the green dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", line_color="red", source=sourceDec)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", line_color="red", name='source_Dec', source=sourceDec)
 
     #this is where the ARIMA line
     
     #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
-    p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast', name='Forecast_line')
+    r3 = p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast_line')
+    p.add_tools(HoverTool(renderers=[r3], tooltips=[("Forecast", "@y")]))
     p.legend.location = "top_left" 
 
     html = file_html(p, CDN, "my plot")
