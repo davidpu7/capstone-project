@@ -13,8 +13,6 @@ from pandas_datareader.data import DataReader
 from datetime import datetime
 from statsmodels import api as sm 
 
-
-
 #test
 
 app = Flask(__name__)
@@ -68,15 +66,16 @@ def view_ticker():
     #This is where ARIMA starts
     df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
     price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1)) 
+    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1))
     results = model.fit(disp=-1)
-    df['Forecast'] = results.fittedvalues 
-    
+    df['Forecast'] = results.fittedvalues
+
     #use ColumnDataSource to pass in data for tooltips
     sourceInc=ColumnDataSource(ColumnDataSource.from_df(df.loc[inc]))
-    sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec]))
+    sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec]))    
     #will not need this one because we are putting a separate hoover to the forecast line
-    #sourceforecast=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))    
+    #sourceforecast=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))
+
 
     #the values for the tooltip come from ColumnDataSource
     hover = HoverTool(
@@ -86,11 +85,11 @@ def view_ticker():
             ("Open", "@Open"),
             ("Close", "@Close"),
             ("Percent", "@changepercent"),
-            ("Volume", "@Volume"),
+	    ("Volume", "@Volume"),
            # ("Forecast", "@Forecast"),
         ]
     )
-    
+
     TOOLS = [CrosshairTool(), hover]
 
     # map dataframe indices to date strings and use as label overrides
@@ -108,20 +107,20 @@ def view_ticker():
     #this is the bottom tail 
     p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
     #this is the candle body for the red dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", line_color="green", name='source_Inc',  source=sourceInc)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", name='source_Inc',line_color="red", source=sourceInc)
     #this is the candle body for the green dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", line_color="red", name='source_Dec', source=sourceDec)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Dec',line_color="green", source=sourceDec)
 
     #this is where the ARIMA line
-    
     #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
     r3 = p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast_line')
-    p.add_tools(HoverTool(renderers=[r3], tooltips=[("Forecast", "@y")]))
-    p.legend.location = "top_left" 
+    p.add_tools(HoverTool(renderers=[r3], tooltips=[('Forecast', '@y')]))
+    
+    p.legend.location = "top_left"
 
     html = file_html(p, CDN, "my plot")
 
     return html
     
 if __name__ == '__main__':
-  app.run(host="0.0.0.0") #host="0.0.0.0"
+  app.run(host='0.0.0.0')
