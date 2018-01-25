@@ -68,7 +68,7 @@ def view_ticker():
     #This is where ARIMA starts
     df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
     price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 1, 1)) 
+    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1)) 
     results = model.fit(disp=-1)
     df['Forecast'] = results.fittedvalues 
     
@@ -76,7 +76,7 @@ def view_ticker():
     sourceInc=ColumnDataSource(ColumnDataSource.from_df(df.loc[inc]))
     sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec]))
     #will not need this one because we are putting a separate hoover to the forecast line
-    sourceforecast=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))    
+    #sourceforecast=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))    
 
     #the values for the tooltip come from ColumnDataSource
     hover = HoverTool(
