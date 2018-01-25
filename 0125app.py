@@ -66,7 +66,7 @@ def view_ticker():
     #This is where ARIMA starts
     df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
     price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 0))
+    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1))
     results = model.fit(disp=-1)
     df['Forecast'] = results.fittedvalues
 
@@ -107,9 +107,9 @@ def view_ticker():
     #this is the bottom tail 
     p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
     #this is the candle body for the red dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Inc',line_color="green", source=sourceInc)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", name='source_Inc',line_color="red", source=sourceInc)
     #this is the candle body for the green dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", name='source_Dec',line_color="red", source=sourceDec)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Dec',line_color="green", source=sourceDec)
 
     #this is where the ARIMA line
     #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
