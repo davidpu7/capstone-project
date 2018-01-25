@@ -68,7 +68,7 @@ def view_ticker():
     #This is where ARIMA starts
     df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
     price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1)) 
+    model = sm.tsa.ARIMA(price_matrix, order=(1, 1, 1)) 
     results = model.fit(disp=-1)
     df['Forecast'] = results.fittedvalues 
     
