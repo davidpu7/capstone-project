@@ -66,7 +66,7 @@ def view_ticker():
     #This is where ARIMA starts
     df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
     price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 1))
+    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 0))
     results = model.fit(disp=-1)
     df['Forecast'] = results.fittedvalues
 
@@ -84,6 +84,8 @@ def view_ticker():
             ("Date", "@Date"),
             ("Open", "@Open"),
             ("Close", "@Close"),
+           # ("High", "@High"),
+           # ("Low", "@Low"),
             ("Percent", "@changepercent"),
 	    ("Volume", "@Volume"),
            # ("Forecast", "@Forecast"),
@@ -103,13 +105,17 @@ def view_ticker():
     p.grid.grid_line_alpha=0.5
 
     #this is the up tail 
-    p.segment(df.seq[inc], df.High[inc], df.seq[inc], df.Low[inc], color="green")
+    r1 = p.segment(df.seq[inc], df.High[inc], df.seq[inc], df.Low[inc], color="green")
+    p.add_tools(HoverTool(renderers=[r1], tooltips=[('High', '@y0'), ('Low', '@y1')]))
+
     #this is the bottom tail 
-    p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
+    r2 = p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
+    p.add_tools(HoverTool(renderers=[r2], tooltips=[('High', '@y0'), ('Low', '@y1')]))
+
     #this is the candle body for the red dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", name='source_Inc',line_color="red", source=sourceInc)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Inc',line_color="green", source=sourceInc)
     #this is the candle body for the green dates
-    p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Dec',line_color="green", source=sourceDec)
+    p.rect(x='seq', y='mid', width=w, height='height', fill_color="red", name='source_Dec',line_color="red", source=sourceDec)
 
     #this is where the ARIMA line
     #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
