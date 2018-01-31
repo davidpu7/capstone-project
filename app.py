@@ -84,8 +84,8 @@ def view_ticker():
             ("Date", "@Date"),
             ("Open", "@Open"),
             ("Close", "@Close"),
-            ("High", "@High"),
-            ("Low", "@Low"),
+           # ("High", "@High"),
+           # ("Low", "@Low"),
             ("Percent", "@changepercent"),
 	    ("Volume", "@Volume"),
            # ("Forecast", "@Forecast"),
@@ -105,8 +105,8 @@ def view_ticker():
     p.grid.grid_line_alpha=0.5
 
     #this is the up tail 
-    r1 = p.segment(df.seq[inc], df.High[inc], df.seq[inc], df.Low[inc], color="green")
-    #p.add_tools(HoverTool(renderers=[r1], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
+    r1 = p.segment(df.seq[inc], df.High[inc], df.seq[inc], df.Low[inc], color="green", name='seg_INC')
+    p.add_tools(HoverTool(renderers=[r1], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
 
     #this is the bottom tail 
     r2 = p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
@@ -129,4 +129,4 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run() #host='0.0.0.0'
+  app.run(host='0.0.0.0') #host='0.0.0.0'
