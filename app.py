@@ -118,11 +118,11 @@ def view_ticker():
 
     #this is the up tail 
     r1 = p.segment(df.seq[inc], df.High[inc], df.seq[inc], df.Low[inc], color="green", name='seg_INC')
-    p.add_tools(HoverTool(renderers=[r1], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
+    #p.add_tools(HoverTool(renderers=[r1], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
 
     #this is the bottom tail 
-    r2 = p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
-    p.add_tools(HoverTool(renderers=[r2], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
+    r2 = p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red", name='seg_DEC') 
+    #p.add_tools(HoverTool(renderers=[r2], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
 
     #this is the candle body for the red dates
     p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Inc',line_color="green", legend='Close High', source=sourceInc)
@@ -141,7 +141,7 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run() #host='0.0.0.0'
+  app.run(host='0.0.0.0') #host='0.0.0.0'
 
 
 
