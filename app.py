@@ -122,7 +122,7 @@ def view_ticker():
 
     #this is the bottom tail 
     r2 = p.segment(df.seq[dec], df.High[dec], df.seq[dec], df.Low[dec], color="red")
-    #p.add_tools(HoverTool(renderers=[r2], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
+    p.add_tools(HoverTool(renderers=[r2], tooltips=[('High', '@y0'), ("Low", "@y1"),]))
 
     #this is the candle body for the red dates
     p.rect(x='seq', y='mid', width=w, height='height', fill_color="green", name='source_Inc',line_color="green", legend='Close High', source=sourceInc)
