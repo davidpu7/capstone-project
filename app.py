@@ -141,7 +141,7 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run(host='0.0.0.0') #host='0.0.0.0'
+  app.run() #host='0.0.0.0'
 
 
 
