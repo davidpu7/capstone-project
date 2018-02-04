@@ -1,0 +1,39 @@
+<!doctype html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Stock Analysis Tool">
+    <meta name="David" content="stock_analysis">
+    <!-- <link rel="icon" href="favicon.ico"> -->
+
+    <title>welcome to Heroku!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!-- Bootstrap core CSS -->
+    <style>
+    </style>    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body style = "background-image: url('static/img/home.png'); background-size: 100%" >
+    <div class="container">
+      <div class="row">
+        <div class="text-left maindiv"> 
+          <h2>Stock Analysis Tool</h2>
+          <form action="{{ url_for('view_ticker') }}" method="post">
+          <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSLA' /></p>
+	  <p>Start Date: <input type='date' name='start' /></p>
+          <p>End Date: <input type='date' name='end' /></p>
+          <!--<input type="checkbox" name ="box1" value='close' />Closing Price<br>
+          <input type="checkbox" name ="box2" value='adj_close' />Adjust closing price<br>
+          <input type="checkbox" name ="box3" value='open' />Opening Price<br>--!>
+          <p><input type="submit" value="Submit"></p>
+          </form>  
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>	 

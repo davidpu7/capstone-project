@@ -21,6 +21,18 @@ app = Flask(__name__)
 def index():
   return render_template('index.html')
 
+@app.route('/stock_predict', methods=['GET', 'POST'])
+def stock_predict():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
+        
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('index'))
+
+    # show the form, it wasn't submitted
+    return render_template('stock_predict.html')
+
 @app.route('/view_ticker', methods=['GET', 'POST'])
 def view_ticker():
     stock = request.form['ticker']
