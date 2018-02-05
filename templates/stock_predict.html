@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -11,6 +10,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <!-- Bootstrap core CSS -->
     <style>
+    p.error {
+        display:inline-table;
+        background-color:green;
+        color:#fff;
+    }
     </style>    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
@@ -22,7 +26,8 @@
           <h2>Stock Analysis Tool</h2>
           <form action="{{ url_for('view_ticker') }}" method="post">
           <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSLA' /></p>
-	  <p>Start Date: <input type='date' name='start' /></p>
+          <p class="error">**Start Date needs to be before End Date**</p>
+	  <p>Start Date: <input type='date' name='start'/></p>
           <p>End Date: <input type='date' name='end' /></p>
           <!--<input type="checkbox" name ="box1" value='close' />Closing Price<br>
           <input type="checkbox" name ="box2" value='adj_close' />Adjust closing price<br>
