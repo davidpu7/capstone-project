@@ -76,6 +76,10 @@ def view_ticker():
     inc = df.Close > df.Open
     dec = df.Open > df.Close
     w=0.5
+
+    #This is for volume graph
+    df['volinc'] = df.Volume[inc]
+    df['voldec'] = df.Volume[dec]
     
     #This is where ARIMA starts
     df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
@@ -93,7 +97,7 @@ def view_ticker():
 
     #the values for the tooltip come from ColumnDataSource
     hover = HoverTool(
-        names=['source_Inc', 'source_Dec'],
+        names=['source_Inc', 'source_Dec', 'volinc', 'voldec'],
         tooltips=[
             ("Date", "@Date"),
             ("Open", "@Open"),
@@ -139,12 +143,11 @@ def view_ticker():
     p.legend.location = "top_left"
 
     #This is the histogram graph
-    p2 = figure(width=p.plot_width, x_range=p.x_range, height=100, title='Volume')
-    p2.vbar(df.seq[inc], 1, df['Volume'], bottom=0, fill_color="green", name='vol_seginc')
-    p2.vbar(df.seq[dec], 1, df['Volume'], bottom=0, fill_color="red", name='vol_segdec')
+    p2 = figure(width=p.plot_width, x_range=p.x_range, tools=TOOLS, height=150, title='Volume')
+    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="green", source=sourceInc, name='volinc')
+    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="red", source=sourceDec, name='voldec')
 
     p_all=(column(p, p2))
-
 
 
     html = file_html(p_all, CDN, "my plot")
