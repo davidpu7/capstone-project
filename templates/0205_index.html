@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Stock Aanalysis Tool" content="">
+    <meta name="David" content="">
+
+    <title>iS-Analysis - We simply Aanlysis</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="static/css/business-frontpage.css" rel="stylesheet"> -->
+    <link href="{{ url_for('static', filename='css/business-frontpage.css') }}"  rel="stylesheet">
+
+    <style>
+
+      body {
+        background-color: black;
+        padding-top: 56px;
+      }
+
+      @media (min-width: 992px) {
+        body {
+          padding-top: 56px;
+         }
+      }
+      
+      .business-header {
+        height: 70vh;
+        min-height: 300px;
+        background: url('static/img/NYC.jpg') center center no-repeat scroll;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+       }  
+  
+      p{
+        color: white;
+	margin: 5px;
+       }
+
+      h2{
+        color: white;
+        font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 700;
+        font-size: 30px;
+	margin: 0 0 35px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+       }
+
+      h4{
+	color: white;
+       }
+
+      section h2.section-heading {
+	font-size: 30px;
+	margin-top: 0;
+	margin-bottom: 15px;
+       } 
+
+      section h3.section-subheading {
+ 	 font-size: 16px;
+ 	 font-weight: 400;
+ 	 font-style: italic;
+ 	 margin-bottom: 30px;
+ 	 text-transform: none;
+ 	 font-family: 'Droid Serif', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}	
+
+      address{
+        color: white;
+       }
+
+      .btn-primary {
+	font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background-color: #008CBA;;
+	border-color: #008CBA;;
+       }
+      
+      .container2{
+        padding-top: 56px;
+        padding-bottom: 50px;
+        padding-right:15px;
+        padding-left:15px;
+        margin-right:auto;
+        margin-left:auto;
+        height: auto;
+      }
+
+      .card{
+        border-color: white;
+        background-color: black;
+	margin: 0;
+	padding: 0;
+        
+      }
+     
+      .card-image{
+	height:300px;
+	width:300px;
+      }
+
+      section p.card-text, .card-title{
+	color: white;
+      } 
+      .explanation{
+        color: gray;
+        font-size: 120%;
+        padding-right:30px;
+        padding-left:30px;
+        padding-bottom: 10px;
+      }
+      
+      .col-centered{
+	float: none;
+	margin: 0 auto;
+      }
+  
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">iS-Analysis - We simply Aanlysis</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+         <!--<li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header with Background Image -->
+    <header class="business-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+        <!--<h1 class="display-3 text-center text-white mt-4">Business Name or Tagline</h1>-->
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- About Section -->
+
+    <section id="intro" class="content-section text-center">
+      <div class="container2">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Stock Analysis Tool</h2>
+	    <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Go to the Tool</a>
+            <p>This is a project that is mainly created for people who is interesting to do stock exchange.</p>
+            <P>The Tool is able to help user define the good buy or sell price for the next day </p>
+            <p>It also includes a candlestick chart with open, close, volume, and percent change compare to the previous day</P>
+            <p>Hopefully, you would find it to be useful</P>
+<!--             <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>
+             <p>This theme features stock photos by
+              <a href="http://gratisography.com/">Gratisography</a> 
+              <  <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p> 
+            <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with SASS and LESS files for easy customization!</p> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Page Content -->
+<!--    
+    <section id ="about">
+     <div class="container">
+
+      <div class="row">
+        <div class="col-sm-8">
+          <h2 class="mt-4">What We Do</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
+          <p>
+            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <h2 class="mt-4">Contact Us</h2>
+          <address>
+            <strong>Start Bootstrap</strong>
+            <br>3481 Melrose Place
+            <br>Beverly Hills, CA 90210
+            <br>
+          </address>
+          <address>
+            <abbr title="Phone">P:</abbr>
+            (123) 456-7890
+            <br>
+            <abbr title="Email">E:</abbr>
+            <a href="mailto:#">name@example.com</a>
+          </address>
+        </div>
+      </div>
+     </section>
+-->
+
+      <!-- /.row -->
+
+   <!-- card section -->
+
+    <section id="services">
+      <div class="container">
+       <div class="row">
+        <div class="col-sm-4 my-4  col-centered text-center">
+          <div class="card" >
+            <img class="card-img-top" src="static/img/stock_shot_up.png" alt="">
+       <!-- <img class="card-img-top" src="static/img/stock_shot_up.png" alt="" width="300px;" height="300px;" max-width="300px;"> -->
+            <div class="card-body">
+              <h4 class="card-title">Stock Price Predictor</h4>
+	      <p class="card-text text-muted"> Help to predict future stock price</p>
+	    </div>
+            <div class="card-footer">
+              <a href="{{ url_for('stock_predict') }}"  class="btn btn-primary">Let's Get Started!</a>
+            </div>
+          </div>
+        </div>
+<!--
+        <div class="col-sm-4 my-4 col-centered text-center" >
+          <div class="card h-75">
+            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+            <div class="card-body">
+              <h4 class="card-title">Card title</h4>
+              <p class="card-text">In Progress...</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 my-4">
+          <div class="card">
+            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+            <div class="card-body">
+              <h4 class="card-title">Card title</h4>
+              <p class="card-text">test.</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div>
+          </div>
+-->
+        </div>
+      </div>     
+       <!-- /.row -->
+
+
+     </div>
+    <!-- /.container -->
+    </section>
+    <!-- /.section -->
+
+    <!-- Team -->
+    <section class="bg-black" id="about">
+      <div class="container2">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">About Myself</h2>
+            <h3 class="section-subheading text-muted">Thanks for visiting! It is so nice to meet you!</h3>
+          </div>
+        </div>
+         <div class="row">
+          <div class="col-sm-4 col-centered text-center">
+            <div class="team-member">
+              <img class="rounded-circle img-fluid d-block mx-auto" src="static/img/david_photo.jpg" alt="">
+              <h4>David Pu</h4>
+              <p class="text-muted">Author</p>
+	      <p>David received his degrees in Statistics, Biological Science, and Economics at Rutgers University. 
+                 He loves data analysis and is very interesting in stock trading.
+	         This is the first project he has done in stock exchange.  
+                 He will periodically update his progress here. </P>   
+              <ul class="list-inline social-buttons">
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+         </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.section -->
+   
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
