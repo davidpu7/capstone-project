@@ -6,8 +6,6 @@ from bokeh.resources import CDN
 from bokeh.embed import file_html
 from bokeh.models import ColumnDataSource, HoverTool,CrosshairTool
 from bokeh.core.properties import value
-from bokeh.io import output_file, show
-from bokeh.layouts import column, row
 from datetime import datetime
 import pandas as pd
 import numpy as np
@@ -100,8 +98,8 @@ def view_ticker():
             ("Close", "@Close"),
             ("High", "@High"),
             ("Low", "@Low"),
-	    ("Volume", "@Volume"),
             ("Percent", "@changepercent"),
+	    ("Volume", "@Volume"),
            # ("Forecast", "@Forecast"),
         ]
     )
@@ -109,7 +107,7 @@ def view_ticker():
     TOOLS = [CrosshairTool(), hover]
 
     # map dataframe indices to date strings and use as label overrides
-    p = figure(plot_width=900, plot_height=500, tools=TOOLS,title = stock+" Candlestick with Custom Date")
+    p = figure(plot_width=1000, plot_height=700, tools=TOOLS,title = stock+" Candlestick with Custom Date")
     p.xaxis.major_label_overrides = {
         i: date.strftime('%Y-%m-%d') for i, date in enumerate(pd.to_datetime(df["Date"], format='%Y-%m-%d'))
     }
@@ -138,16 +136,7 @@ def view_ticker():
     
     p.legend.location = "top_left"
 
-    #This is the histogram graph
-    p2 = figure(width=p.plot_width, x_range=p.x_range, height=100, title='Volume')
-    p2.vbar(df.seq[inc], 1, df['Volume'], bottom=0, fill_color="green", name='vol_seginc')
-    p2.vbar(df.seq[dec], 1, df['Volume'], bottom=0, fill_color="red", name='vol_segdec')
-
-    p_all=(column(p, p2))
-
-
-
-    html = file_html(p_all, CDN, "my plot")
+    html = file_html(p, CDN, "my plot")
 
     return html
     
