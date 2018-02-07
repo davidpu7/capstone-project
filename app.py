@@ -64,6 +64,20 @@ def view_ticker():
     #mydata = qd.get("WIKI/" + stock + value, rows = 20, api_key='oSvidbxNa84mVv7Kzqh2')
     
     df.reset_index(inplace=True,drop=False)
+
+    #This is where ARIMA starts
+    df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
+    price_matrix = df['Close'].as_matrix()
+    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 3))
+    results = model.fit(disp=-1) #disp=1 (disp < 0 means no output in this case. 1 = output)
+    #df['Forecast'] = results.fittedvalues
+
+    #Add one more day
+    df['Date']=pd.to_datetime(df['Date'])
+    end_new = end + pd.offsets.BDay(1)
+    df = df.append ({'Date':end_new}, ignore_index=True)
+
+
     df['changepercent'] = df.Close.pct_change()*100
     seqs=np.arange(df.shape[0]) 
     df["seq"]=pd.Series(seqs)
@@ -81,16 +95,24 @@ def view_ticker():
     df['volinc'] = df.Volume[inc]
     df['voldec'] = df.Volume[dec]
     
-    #This is where ARIMA starts
-    df['Natural Log'] = df['Close'].apply(lambda x: np.log(x))
-    price_matrix = df['Close'].as_matrix()
-    model = sm.tsa.ARIMA(price_matrix, order=(1, 0, 0))
-    results = model.fit(disp=-1)
-    df['Forecast'] = results.fittedvalues
+    #Add additional Forecast Day
+    forecast_start = df.index[0]
+    forecast_end = df.index[-1]
+    #print forecast_start
+    #print forecast_end
+
+    #forcast = results.predict(forecast_start, forecast_end, dynamic=False) #, dynamic= True means in-sample
+    df['Forcast_New']=results.predict(forecast_start, forecast_end, dynamic=False)
+    #print df
+
+    # print df.iloc[-3:]
+    #forecast= results.predict(start, end, dynamic=True)
+    # print forecast
 
     #use ColumnDataSource to pass in data for tooltips
     sourceInc=ColumnDataSource(ColumnDataSource.from_df(df.loc[inc]))
-    sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec]))    
+    sourceDec=ColumnDataSource(ColumnDataSource.from_df(df.loc[dec])) 
+    sourceAll=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))   
     #will not need this one because we are putting a separate hoover to the forecast line
     #sourceforecast=ColumnDataSource(ColumnDataSource.from_df(df.loc[:]))
 
@@ -137,8 +159,12 @@ def view_ticker():
 
     #this is where the ARIMA line
     #p.circle(df.seq, df['Forecast'], color='darkgrey', alpha=0.2, legend='Forecast')
-    r3 = p.line(df.seq, df['Forecast'], line_width=2, color='navy', legend='Forecast_line')
-    p.add_tools(HoverTool(renderers=[r3], tooltips=[('Forecast', '@y')]))
+    r3 = p.line(x='seq', y='Forcast_New', line_width=2, color='navy', legend='Forecast_line', source=sourceAll)
+    p.add_tools(HoverTool(renderers=[r3], tooltips=[('Date', '@Date'),('Forecast', '@Forcast_New')]))
+
+    #r4 = p.line(df.seq, df['Forecast2'], line_width=2, color='yellow', legend='Future_Day1')
+    #p.add_tools(HoverTool(renderers=[r4], tooltips=[('Forecast', '@y')]))
+
     
     p.legend.location = "top_left"
 
