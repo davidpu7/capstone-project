@@ -26,7 +26,7 @@
           <h2>Stock Price Predictor</h2>
           <form action="{{ url_for('view_ticker') }}" method="post">
           <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSLA' /></p>
-          <p class="error">**Please use at least 2 months for time range**</p>
+          <p class="error">**Please use at least 3 months for time range**</p>
 	  <p>Start Date: <input type='date' name='start'/></p>
           <p>End Date: <input type='date' name='end' /></p>
           <!--<input type="checkbox" name ="box1" value='close' />Closing Price<br>
