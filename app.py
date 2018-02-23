@@ -11,7 +11,7 @@ from bokeh.layouts import column, row
 from datetime import datetime
 import pandas as pd
 import numpy as np
-from pandas_datareader.data import DataReader
+#from pandas_datareader.data import DataReader
 from datetime import datetime
 from statsmodels import api as sm 
 from flask import render_template
@@ -51,7 +51,6 @@ def view_ticker():
     if start > end:
 	return 'Invalid end date. Please select end date not in future.'
 
-    value = '.4'
     status = 'Close'
 #    if request.form.get('box1'):
 #        value = '.4'
@@ -63,8 +62,12 @@ def view_ticker():
 #        value = '.1'
 #        status = 'Open'
      
-    df = DataReader(stock, 'yahoo', start, end)
-    #mydata = qd.get("WIKI/" + stock + value, rows = 20, api_key='oSvidbxNa84mVv7Kzqh2')
+    #Yahoo Actions has been immediately deprecated due to large breaks in the API without the introduction of a stable replacement.
+    #df = DataReader(stock, 'yahoo', start, end)
+    
+    df = qd.get("WIKI/" + stock, start_date=start, end_date=end, api_key='oSvidbxNa84mVv7Kzqh2')
+    #df = qd.get("WIKI/" + stock + value, rows = 20, api_key='oSvidbxNa84mVv7Kzqh2')
+
     
     df.reset_index(inplace=True,drop=False)
 
