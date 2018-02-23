@@ -14,16 +14,10 @@ import numpy as np
 from pandas_datareader.data import DataReader
 from datetime import datetime
 from statsmodels import api as sm 
-from flask import render_template
 
 #test
 
 app = Flask(__name__)
-
-#this is the general 404 error
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
 
 @app.route('/')
 def index():
@@ -31,6 +25,13 @@ def index():
 
 @app.route('/stock_predict', methods=['GET', 'POST'])
 def stock_predict():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
+        
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('index'))
+
     # show the form, it wasn't submitted
     return render_template('stock_predict.html')
 
@@ -46,13 +47,9 @@ def view_ticker():
     end = datetime.strptime(end, '%Y-%m-%d')
     end = end.date()
     #print "end"
-
-    #this is the checking for server error message
-    if start > end:
-	return 'Invalid end date. Please select end date not in future.'
-
     value = '.4'
     status = 'Close'
+
 #    if request.form.get('box1'):
 #        value = '.4'
 #        status = 'Close'
