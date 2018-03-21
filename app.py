@@ -11,8 +11,11 @@ from bokeh.layouts import column, row
 from datetime import datetime
 import pandas as pd
 import numpy as np
-#from pandas_datareader.data import DataReader
-from datetime import datetime
+#we dont need this "from pandas_datareader.data import DataReader"
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
+#calculating business day
+from pandas.tseries.offsets import BDay
 from statsmodels import api as sm 
 from flask import render_template
 
@@ -27,12 +30,14 @@ def page_not_found(e):
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/stock_predict', methods=['GET', 'POST'])
 def stock_predict():
-    # show the form, it wasn't submitted
-    return render_template('stock_predict.html')
+    # having a default start date that is 3 months ago
+    start = date.today() - relativedelta(months=+3)
+    end = date.today()
+    return render_template('stock_predict.html', start=str(start), end=str(end))
 
 @app.route('/view_ticker', methods=['GET', 'POST'])
 def view_ticker():
@@ -187,7 +192,7 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run(host='0.0.0.0') #host='0.0.0.0'
+  app.run(debug=True) #host='0.0.0.0'
 
 
 

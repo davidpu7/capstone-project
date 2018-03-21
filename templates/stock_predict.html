@@ -27,8 +27,8 @@
           <form action="{{ url_for('view_ticker') }}" method="post">
           <p>Ticker symbol: <input type='text' name ='ticker' placeholder='TSLA' /></p>
           <p class="error">**Please use at least 3 months for time range**</p>
-	  <p>Start Date: <input type='date' name='start'/></p>
-          <p>End Date: <input type='date' name='end' /></p>
+	  <p>Start Date: <input type='date' value = {{start}} name= 'start'/></p>
+	  <p>End Date: <input type='date' value = {{end}} name='end' /></p>
           <!--<input type="checkbox" name ="box1" value='close' />Closing Price<br>
           <input type="checkbox" name ="box2" value='adj_close' />Adjust closing price<br>
           <input type="checkbox" name ="box3" value='open' />Opening Price<br>--!>
