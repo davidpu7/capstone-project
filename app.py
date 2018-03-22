@@ -192,8 +192,8 @@ def view_ticker():
 
     #This is the histogram graph
     p2 = figure(width=p.plot_width, x_range=p.x_range, tools=TOOLS, height=150, title='Volume')
-    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="green", source=sourceAll, name='volinc')
-    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="red", source=sourceAll, name='voldec')
+    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="mediumseagreen", source=sourceAll, name='volinc')
+    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="lightcoral", source=sourceAll, name='voldec')
 
     p_all=(column(p, p2))
 
