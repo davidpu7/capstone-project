@@ -36,6 +36,8 @@ def index():
 def stock_predict():
     # having a default start date that is 3 months ago
     start = date.today() - relativedelta(months=+3)
+    #pd.offsets.BDay(1) is for having a date before start date (this is for the volume histogram)
+    start = start - pd.offsets.BDay(1)
     end = date.today()
     return render_template('stock_predict.html', start=str(start), end=str(end))
 
@@ -98,15 +100,23 @@ def view_ticker():
     df['mid']=df.apply(lambda x:(x['Open']+x['Close'])/2,axis=1)
     df['height']=df.apply(lambda x:abs(x['Close']-x['Open'] if x['Close']!=x['Open'] else 0.001),axis=1)
     
-    #Use () and | to fix no graph show error from pandas
+    #Use () and | to fix no candlestick graph show when close and open price is the same per that date
     inc = (df.Close > df.Open) | (df.Close == df.Open)
     dec = (df.Open > df.Close) | (df.Open == df.Close)
     w=0.5
 
-    #This is for volume graph
-    df['volinc'] = df.Volume[inc]
-    df['voldec'] = df.Volume[dec]
-    
+
+    #Calculation for volume graph
+    close_inc = (df.Close.diff() > 0)
+    close_dec = (df.Close.diff() < 0)
+    df['volinc'] = df.Volume[close_inc]
+    df['voldec'] = df.Volume[close_dec]
+
+
+    #filter the first row of the dataframe so volume histogram can show
+    df=df.iloc[1:]
+    print df
+
     #Add additional Forecast Day
     forecast_start = df.index[0]
     forecast_end = df.index[-1]
@@ -182,8 +192,8 @@ def view_ticker():
 
     #This is the histogram graph
     p2 = figure(width=p.plot_width, x_range=p.x_range, tools=TOOLS, height=150, title='Volume')
-    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="green", source=sourceInc, name='volinc')
-    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="red", source=sourceDec, name='voldec')
+    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="green", source=sourceAll, name='volinc')
+    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="red", source=sourceAll, name='voldec')
 
     p_all=(column(p, p2))
 
@@ -193,7 +203,7 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run(debug=True) #host='0.0.0.0'
+  app.run() #host='0.0.0.0' debug=True
 
 
 
