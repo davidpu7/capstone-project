@@ -98,9 +98,8 @@ def view_ticker():
     df['mid']=df.apply(lambda x:(x['Open']+x['Close'])/2,axis=1)
     df['height']=df.apply(lambda x:abs(x['Close']-x['Open'] if x['Close']!=x['Open'] else 0.001),axis=1)
     
-    #Use () and | to fix no graph show error from pandas
-    inc = (df.Close > df.Open) | (df.Close == df.Open)
-    dec = (df.Open > df.Close) | (df.Open == df.Close)
+    inc = df.Close > df.Open
+    dec = df.Open > df.Close
     w=0.5
 
     #This is for volume graph
