@@ -8,3 +8,4 @@ simplejson
 quandl
 pandas-datareader
 statsmodels
+os
