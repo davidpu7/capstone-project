@@ -15,10 +15,25 @@
         background-color:green;
         color:#fff;
     }
+    .flashes { background: #cee5F5; padding: 0.5em;
+                  border: 1px solid #aacbe2; }
     </style>    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body style>
+  	{% with messages = get_flashed_messages(with_categories=true) %}
+        <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+	    {% if messages %}
+            <ul class=flashes>
+	        {% for category, message in messages %}
+		        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+			        {{ message }}
+		        </div>
+		    {% endfor %}
+            </ul>
+	    {% endif %}
+	{% endwith %}
 <!-- <body style = "background-image: url('static/img/home.png'); background-size: 100%; background-repeat: no-repeat;" > -->
     <div class="container">
       <div class="row">

@@ -18,10 +18,19 @@ from dateutil.relativedelta import relativedelta
 from pandas.tseries.offsets import BDay
 from statsmodels import api as sm 
 from flask import render_template
+import logging
+import flask
 
 #test
 
 app = Flask(__name__)
+
+@app.before_first_request
+def setup_logging():
+    if not app.debug:
+        # In production mode, add log handler to sys.stderr.
+        app.logger.addHandler(logging.StreamHandler())
+        app.logger.setLevel(logging.INFO)
 
 #this is the general 404 error
 @app.errorhandler(404)
@@ -115,7 +124,6 @@ def view_ticker():
 
     #filter the first row of the dataframe so volume histogram can show
     df=df.iloc[1:]
-    print df
 
     #Add additional Forecast Day
     forecast_start = df.index[0]
@@ -192,8 +200,8 @@ def view_ticker():
 
     #This is the histogram graph
     p2 = figure(width=p.plot_width, x_range=p.x_range, tools=TOOLS, height=150, title='Volume')
-    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="green", source=sourceAll, name='volinc')
-    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="red", source=sourceAll, name='voldec')
+    p2.vbar(x='seq', top='volinc', width=1, bottom=0, color="mediumseagreen", source=sourceAll, name='volinc')
+    p2.vbar(x='seq', top='voldec', width=1, bottom=0, color="lightcoral", source=sourceAll, name='voldec')
 
     p_all=(column(p, p2))
 

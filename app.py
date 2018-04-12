@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash, url_for
 import requests as rq
 import quandl as qd
 from bokeh.plotting import figure
@@ -18,10 +18,22 @@ from dateutil.relativedelta import relativedelta
 from pandas.tseries.offsets import BDay
 from statsmodels import api as sm 
 from flask import render_template
+import logging
+import os
+import flask
 
 #test
 
 app = Flask(__name__)
+#this is for flash
+app.secret_key = os.urandom(24)
+
+@app.before_first_request
+def setup_logging():
+    if not app.debug:
+        # In production mode, add log handler to sys.stderr.
+        app.logger.addHandler(logging.StreamHandler())
+        app.logger.setLevel(logging.INFO)
 
 #this is the general 404 error
 @app.errorhandler(404)
@@ -44,6 +56,9 @@ def stock_predict():
 @app.route('/view_ticker', methods=['GET', 'POST'])
 def view_ticker():
     stock = request.form['ticker']
+    if stock == "":
+        flash('Please enter Ticker symbol')
+        return redirect(url_for('stock_predict'))
     #print stock
     start = request.form['start']
     start = datetime.strptime(start, '%Y-%m-%d')
@@ -56,8 +71,8 @@ def view_ticker():
 
     #this is the checking for server error message
     if start > end:
-	return 'Invalid end date. Please select end date not in future.'
-
+        flash('Invalid end date. Please select end date not in future.')
+        return redirect(url_for('stock_predict'))
     status = 'Close'
 #    if request.form.get('box1'):
 #        value = '.4'
@@ -115,7 +130,6 @@ def view_ticker():
 
     #filter the first row of the dataframe so volume histogram can show
     df=df.iloc[1:]
-    print df
 
     #Add additional Forecast Day
     forecast_start = df.index[0]
@@ -203,7 +217,7 @@ def view_ticker():
     return html
     
 if __name__ == '__main__':
-  app.run() #host='0.0.0.0' debug=True
+  app.run(debug=True) #host='0.0.0.0' debug=True
 
 
 
